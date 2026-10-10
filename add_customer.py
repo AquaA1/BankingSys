@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 from datetime import date
 from decimal import Decimal
 
+load_dotenv()
+
 dbPass = os.getenv("DB_Pass")
 
 def add_customer():
@@ -32,8 +34,8 @@ def add_customer():
 
     cursor.execute(
         """
-        insert into customer (name , age , dob , amount)
-        value (%s , %s , %s ,%s)
+        insert into customers (name , age , dob , amount)
+        values (%s , %s , %s ,%s)
         returning id
         """,
         (name , age , dob , amount)
@@ -44,6 +46,8 @@ def add_customer():
     print("Sucessfully created the customer")
     print("Customer id = ",customer_id)
     print("Customer name = ",name)
+
+    connection.commit()
 
 if __name__ == "__main__":
     add_customer()
